@@ -1,16 +1,17 @@
-# 开场 HUD
+# 開場 HUD
 
-2026-09-11：按用户要求，既有 HUD 开关覆盖开场 UI。
+2026-09-11：按用戶要求，既有 HUD 開關覆蓋開場 UI。
 
-- 接入 ACCESS、Logo、验证文字、扫描圆环与欢迎画面；品牌及 Powered 共用既有投影。
-- 先更新 BootSequence 当帧原始动作，再读取本帧布局并计算投影，避免缓存旧的 Logo 位移或欢迎缩放。仅开场逐帧测量相关七块内容，交互阶段保留原来的按需测量。
-- 阶段切换不再将 HUD 深度归零。关闭追踪保留曲面，减少动态效果停止追踪，关闭 HUD 恢复原始 DOM 变换。三维镜头继续不响应被动指针。
-- 磨砂底沿用仅交互阶段启用的范围，全局屏幕效果继续覆盖开场。
+- 接入 ACCESS、Logo、驗證文字、掃描圓環與歡迎畫面；品牌及 Powered 共用既有投影。
+- 先更新 BootSequence 當幀原始動作，再讀取本幀布局并計算投影，避免緩存舊的 Logo 位移或歡迎縮放。僅開場逐幀測量相關七塊內容，交互階段保留原來的按需測量。
+- 階段切換不再將 HUD 深度歸零。關閉追蹤保留曲面，減少動態效果停止追蹤，關閉 HUD 恢復原始 DOM 變換。三維鏡頭繼續不響應被動指針。
+- 磨砂底沿用僅交互階段啟用的范圍，全局屏幕效果繼續覆蓋開場。
 
-验证：`npm run build:wallpaper`、`node scripts/check-visual-effects.mjs`、`node scripts/check-boot-hud.mjs` 通过。Edge 实际运行覆盖开场五块投影、启停、静态追踪、减少动态效果、工作台衔接与 2560×1080 视口；无页面异常。截图与结果见 `verification/boot-hud/`。检查了圆环与欢迎画面截图；尚待用户试用最终观感。
+驗證：`npm run build:wallpaper`、`node scripts/check-visual-effects.mjs`、`node scripts/check-boot-hud.mjs` 通過。Edge 實際運行覆蓋開場五塊投影、啟停、靜態追蹤、減少動態效果、工作臺銜接與 2560×1080 視口；無頁面異常。截圖與結果見 `verification/boot-hud/`。檢查了圓環與歡迎畫面截圖；尚待用戶試用最終觀感。
 
-复现脚本自带 5189 静态服务，读取壁纸构建；可通过 `PLAYWRIGHT_MODULE` 指定 Playwright 安装位置。
+復現腳本自帶 5189 靜態服務，讀取壁紙構建；可通過 `PLAYWRIGHT_MODULE` 指定 Playwright 安裝位置。
 
-## Logo 下方小字闪动修正
+## Logo 下方小字閃動修正
 
-用户录屏 `PixPin_2026-09-11_10-36-02.mp4` 指向 Logo 内的 RHINE·LAB 字样。此前 BootSequence 每帧无条件赋值 SVG text.textContent；内容完整且不变时，650ms 内产生 20 次节点替换。改为仅内容变化时赋值。浏览器回归同一时段为 0 次替换，保留同一个文本节点和完整文字，HUD 其他回归通过。仅修正此处文字更新，最终 WE 录屏所见的闪动是否完全消失仍待用户复看。
+用戶錄屏 `PixPin_2026-09-11_10-36-02.mp4` 指向 Logo 內的 RHINE·LAB 字樣。此前 BootSequence 每幀無條件賦值 SVG text.textContent；內容完整且不變時，650ms 內產生 20 次節點替換。改為僅內容變化時賦值。瀏覽器回歸同一時段為 0 次替換，保留同一個文本節點和完整文字，HUD 其他回歸通過。僅修正此處文字更新，最終 WE 錄屏所見的閃動是否完全消失仍待用戶復看。
+或

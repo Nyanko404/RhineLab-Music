@@ -7,3 +7,4 @@
 - 390 px 與 820 px 的 2D 備援使用原始模型的預覽圖，瀏覽器未出現橫向溢出。 [手機](verification/music/mobile-2d.png) · [平板](verification/music/tablet-2d.png)
 
 final result: passed
+Ő

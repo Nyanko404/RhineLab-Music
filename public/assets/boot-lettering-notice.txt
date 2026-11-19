@@ -1,4 +1,4 @@
-Opening lettering / 开场文字
+Opening lettering / 開場文字
 
 Novecento Sans Wide, designed by Jan Tonellato / Synthview Type Design.
 https://typography.synthview.com/novecento-sans-font-family.php
@@ -28,3 +28,4 @@ The fonts are individually licensed to the website owner. Other users must
 obtain their own license; this project's MIT license does not cover them.
 Retain the original kit's RhineLabNovecento.css copyright and license notice.
 Webfont rights are limited by the owner's license term, domain and pageviews.
+付

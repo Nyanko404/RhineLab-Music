@@ -1,17 +1,63 @@
-# RhineLab Music
+# RhineLab Music — 萊茵生命 3D 互動桌面音樂終端
 
-RhineLab Music 直接改造自 [LBEILC/RhineLabUI](https://github.com/LBEILC/RhineLabUI) 的 `12cc5e4013acb9408f753ff71de6b8492299b7c8`。播放器沿用原始 TypeScript、Vite、Three.js、GLB 卡片、玻璃材質及場景互動。網站根路徑開啟音樂終端，`/?archive=1` 進入原始檔案終端。
+**把萊茵生命的終端，做成可實際操作的 Windows 64 位元三維桌面音樂播放器。**
 
-## 啟動
+[![下載 v1.0.0 安裝精靈](https://img.shields.io/badge/下載_v1.0.0-Windows_64位元_一鍵安裝版-d98a4e?style=for-the-badge)](https://github.com/ychengyu/RhineLab-Music/releases/download/v1.0.0/RhineLab-Music-Setup-v1.0.0.exe)
+[![下載 v1.0.0 免安裝攜帶版](https://img.shields.io/badge/下載_v1.0.0-免安裝攜帶版_ZIP-2a3030?style=for-the-badge)](https://github.com/ychengyu/RhineLab-Music/releases/download/v1.0.0/RhineLab-Music-Portable-v1.0.0-Win64.zip)
+[![GitHub Release](https://img.shields.io/badge/Releases-v1.0.0-4b5350?style=for-the-badge)](https://github.com/ychengyu/RhineLab-Music/releases/tag/v1.0.0)
 
-需要 Node.js 22.16 以上與 npm。在專案根目錄執行：
+![萊茵生命終端：由透明檔案盒構成的三維陣列](docs/media/archive.jpg)
+
+RhineLab Music 改造自 [LBEILC/RhineLabUI](https://github.com/LBEILC/RhineLabUI)，沿用原始 **TypeScript + Three.js + Vite** 即時三維渲染架構、GLB 卡盒模型與玻璃光學材質，並專為 **Windows 電腦桌面端** 打造無邊框 WebView2 原生宿主、本機與跨平臺串流音訊代理、高解析度超採樣渲染與多種抗鋸齒管線。
+
+---
+
+## 直接下載安裝（Windows 10 / 11 64 位元）
+
+前往 **[GitHub Releases (v1.0.0)](https://github.com/ychengyu/RhineLab-Music/releases/tag/v1.0.0)** 下載：
+
+| 版本 | 檔案 | 說明 |
+| --- | --- | --- |
+| **一鍵安裝精靈（推薦）** | [`RhineLab-Music-Setup-v1.0.0.exe`](https://github.com/ychengyu/RhineLab-Music/releases/download/v1.0.0/RhineLab-Music-Setup-v1.0.0.exe) | 免系統管理員權限安裝（預設 `%LOCALAPPDATA%\Programs\RhineLab Music`，可自訂資料夾），自動建立桌面與開始功能表捷徑、偵測 WebView2 Runtime 並登錄 Windows 解除安裝程式 |
+| **免安裝攜帶版 ZIP** | [`RhineLab-Music-Portable-v1.0.0-Win64.zip`](https://github.com/ychengyu/RhineLab-Music/releases/download/v1.0.0/RhineLab-Music-Portable-v1.0.0-Win64.zip) | 解壓縮至任意資料夾後，直接雙擊執行 `RhineLab-Music.exe` 即可使用 |
+| **SHA-256 校驗清單** | [`SHA256SUMS.txt`](https://github.com/ychengyu/RhineLab-Music/releases/download/v1.0.0/SHA256SUMS.txt) | 安裝檔與攜帶版壓縮包之 SHA-256 雜湊校驗碼 |
+
+---
+
+## 核心功能
+
+### 1. 本機無損與跨平臺音樂播放
+- **本機音訊匯入**：支援 MP3、WAV、FLAC、ALAC、OGG、AAC、M4A、AIFF、DSF 等格式，支援檔案選取與拖曳匯入、自動解析 ID3 / Vorbis / MP4 標籤與內嵌封面，亦可隨時上傳自訂曲目封面。
+- **跨平臺連結與歌單匯入**：支援匯入 YouTube（含單曲、公開播放清單、`music.youtube.com`）、Bilibili、Spotify 與直接音訊串流連結。詳見 [平臺設定、權限與限制](docs/MUSIC-PLATFORMS.md)。
+- **1 MB 首段記憶體預熱與串流代理**：桌面版內建本機背景串流代理與 LRU 1 MB 首段 RAM 快取（`headCache`），播放中自動預熱下一首曲目並在首次播放時同步擷取首段快取，切歌、上一首與從頭重播（`↻`）皆可瞬間響應。
+- **共用單例 `AudioContext` 與高 DPI 即時頻譜**：曲目切換時零重建音訊上下文，於「01 曲目簡介」分頁提供高 DPI 漸層即時頻譜與峰值保持（Peak-Hold）動態波形。
+
+### 2. 三維玻璃唱片匣與音樂律動
+- **3D 唱片檢視與陣列切換**：主畫面可左右旋轉檢視透明玻璃唱片匣與雙環內構，亦可一鍵切換回五列循環 3D 唱片陣列或收藏清單範圍。
+- **音樂律動與燈效模式**：唱片模型與邊框燈環會隨音樂低／中／高頻能量與節拍即時律動，支援「音訊律動（Reactive）」、「RGB 流光」、「呼吸燈」、「自訂顏色」與關閉。
+- **介面操作音效**：內建清脆玻璃互動音與終端電子回饋音效，可在設定中獨立開關並即時預覽調整音量。
+
+### 3. 畫質設定、1080p / 2K / 4K 解析度與 FXAA / SMAA / TAA 抗鋸齒
+- **目標渲染解析度**：支援 **自動原生（Native）**、**1080p（FHD）**、**2K（1440p QHD）**、**4K（2160p UHD）** 超採樣渲染，設定頁即時顯示當前實際像素尺寸、倍率與抗鋸齒狀態。
+- **完整抗鋸齒模式**：內建 **關閉（Off）**、**FXAA（快速邊緣抗鋸齒）**、**SMAA（次像素形態學抗鋸齒）**、**TAA（時間採樣抗鋸齒）** 四種模式，並採用 `1024 × 1024` 6px 柔邊 Mipmap + 各向異性過濾封面貼圖以消除斜邊鋸齒。
+- **多檔畫質與桌面圖形後端**：提供效能、平衡、原始、高畫質、極致畫質與自訂參數（解析度倍率、螢幕像素比、景深強度），桌面版亦可於設定中切換 GPU 偏好與渲染後端（D3D11 / D3D12 / OpenGL / Vulkan）。
+
+---
+
+## 從原始碼啟動與打包
+
+需要 **Node.js 22.16 以上**（支援 Node.js 24）與 npm。
+
+### 1. 本地開發模式
 
 ```sh
 npm ci
 npm run dev
 ```
 
-預設網址為 `http://127.0.0.1:5173`。本機音訊和連結匯入可直接使用。首頁的〈觀測室 · Observatory〉試聽取自上游原創配樂。
+預設網址為 `http://127.0.0.1:5173`。Windows 使用者安裝 Node.js 後亦可直接雙擊 [`啟動終端.cmd`](啟動終端.cmd) 自動安裝依賴並開啟介面。
+
+### 2. 型別檢查、測試與網頁建置
 
 ```sh
 npm run typecheck
@@ -22,340 +68,63 @@ npm run build
 npm run preview
 ```
 
-正式輸出位於 `dist/`，可部署至網站根路徑的 HTTPS 靜態主機。PWA 的本機快取在正式建置中啟用。瀏覽器自動化測試使用 Playwright Chromium：
+### 3. 打包 Windows 64 位元獨立執行檔與安裝分享版
 
 ```sh
-npx playwright install chromium
-npm run test:browser
-```
-
-也可用 `CHROMIUM_PATH=/usr/bin/chromium npm run test:browser` 指定系統瀏覽器。
-
-## Windows 桌面版與安裝分享包打包
-
-支援打包為 Windows 64 位元無邊框 WebView2 獨立桌面應用程式（`release/desktop/RhineLab-Music.exe`）以及一鍵安裝精靈（`release/share/RhineLab-Music-Setup-v1.0.0.exe`）與免安裝壓縮版（`release/share/RhineLab-Music-Portable-v1.0.0-Win64.zip`）：
-
-```sh
-# 僅建置單檔桌面執行檔 (release/desktop/RhineLab-Music.exe)
+# 建置單檔無邊框桌面執行檔 (輸出至 release/desktop/RhineLab-Music.exe)
 npm run build:exe
 
-# 建置桌面執行檔 + 一鍵安裝精靈 + 攜帶版 ZIP (release/share/)
+# 建置桌面執行檔 + 一鍵安裝精靈 + 免安裝攜帶版 ZIP (輸出至 release/share/)
 npm run build:installer
 ```
 
-> 打包前請將 WebView2 SDK（`Microsoft.Web.WebView2.Core.dll`、`Microsoft.Web.WebView2.WinForms.dll`、`WebView2Loader.dll`）置於 `vendor/webview2`（或設定 `WEBVIEW2_SDK_DIR`），並將 `yt-dlp.exe` 置於 `vendor/yt-dlp.exe`（或設定 `YTDLP_PATH`）。
-
-## 功能與文件
-
-- **本機音樂**支援瀏覽器可解碼的 MP3、WAV、FLAC、OGG 等格式、拖曳匯入、標籤與封面、本機 Web Audio 高 DPI 即時頻譜。
-- **3D 視覺與畫質**支援唱片隨音樂律動與燈效、1080p / 2K / 4K 目標渲染解析度、FXAA / SMAA / TAA 抗鋸齒切換、透明玻璃唱片匣檢視與明暗雙主題。
-- **音樂庫**提供來源篩選、3D 卡片、專輯牆、跨來源收藏與自訂播放清單、最近播放、IndexedDB 和 LRC 歌詞。支援鍵盤與 Media Session。
-- **平台**提供 YouTube、Bilibili、Spotify 與各大串流連結匯入及桌面端本機串流代理（含 1 MB 首段記憶體預熱快取）。 [平台設定、權限與限制](docs/MUSIC-PLATFORMS.md)
-- **改造與驗收**包含重用模組、變更範圍、測試記錄與已知限制。 [改造紀錄](docs/MUSIC-CHANGES.md) · [驗收報告](docs/MUSIC-VERIFICATION.md)
-
-上游授權保留。對第三方品牌、原作素材和商用字體的排除條款，見本頁末尾的上游授權說明。 [MIT 授權](LICENSE)
+> **打包前置元件**：執行 `build:exe` 或 `build:installer` 前，請將 WebView2 SDK 二進位檔（`Microsoft.Web.WebView2.Core.dll`、`Microsoft.Web.WebView2.WinForms.dll`、`WebView2Loader.dll`）放入 `vendor/webview2`（或設定環境變數 `WEBVIEW2_SDK_DIR`），並將 `yt-dlp.exe` 放入 `vendor/yt-dlp.exe`（或設定環境變數 `YTDLP_PATH`）。
 
 ---
 
-# RHINE LAB · ANALYSIS OS
-
-**把莱茵生命的终端，做成可以操作的三维界面。**
-
-**[在线体验 → rhine.lubeiluchen.cc](https://rhine.lubeiluchen.cc/)**
-
-iPhone 可用 Safari 打开在线版，通过“分享 → 添加到主屏幕”安装；从主屏幕图标进入可使用独立窗口。首次联网后，设置中显示“离线资源已就绪”即可离线浏览档案和模型。支持桌面不同比例、手机横竖屏和触摸操作。[安装与更新说明](docs/PWA.md)
-
-![莱茵生命终端：由透明档案盒构成的三维阵列](docs/media/archive.jpg)
-
-这是对《明日方舟》特别映像「莱茵生命：访问」终端界面的非官方复刻。从白底开场进入五列循环档案阵列，抽取一份档案，等待玻璃与正文解密，再进入独立查看器观察内部结构。
-
-项目以原 PV 的 **5–40 秒**为主要视觉与动效参考，实际开场从 **6.76 秒的白色画面**开始；内部结构另参考约 **41 秒及 46–51 秒**的正面与多角度画面。检索、收藏、正文阅读、结构拆解与声音设置是可操作的扩展功能。
-
-代码由 GPT-6 Astra 协助完成，模型通过 Blender MCP 制作。界面采用 **TypeScript + Three.js + Vite**，运行时实时渲染三维模型，开场由 DOM / SVG 与场景时间轴驱动。
-
-[快速运行](#快速运行) · [界面与动效](#界面与动效) · [操作说明](#操作说明) · [源码与 Blender 工程下载](https://pan.quark.cn/s/762d9ee9dfc3) · [参考原 PV](https://www.bilibili.com/video/BV1rr4y1b7sz/)
-
-## Wallpaper Engine 壁纸与独立仓库
-
-壁纸版已从本项目拆分为独立公共仓库，后续功能在 **[RhineLabWallpaper](https://github.com/LBEILC/RhineLabWallpaper)** 的 `main` 分支开发。本仓库继续维护网页版本；[原壁纸分支 codex/wallpaper-engine](https://github.com/LBEILC/RhineLabUI/tree/codex/wallpaper-engine) 保留迁移记录。需要最新壁纸源码，请前往独立仓库。
-
-**[在 Steam 创意工坊订阅壁纸 → Rhine Lab · 莱茵生命交互桌面](https://steamcommunity.com/sharedfiles/filedetails/?id=3799142774)**
-
-![Wallpaper Engine 工作台预览](wallpaper/preview.gif)
-
-- **两种工作模式**：三维档案展示与桌面工作台，可显示时间日期、今日事项、日程倒计时、系统媒体信息和专注计时。
-- **壁纸交互**：音乐律动、呼吸效果、波纹接力小游戏，以及亮暗配色、玻璃模糊、HUD 曲面与视差。
-- **按需保留画面**：在 WE 属性中选择显示哪些组件；可关闭启动时加载 3D，播放 2D 开场后直接进入工作台，再从左下角手动载入模型。
-- **自定义图片**：关闭 3D 后可显示自行选择的壁纸，支持调整上下遮罩范围，设为 0 即关闭；时钟和媒体信息复用滚动数字与文字效果。
-- **宿主适配**：接入 WE 属性、音频响应、媒体信息、帧率及暂停通知，壁纸资源本地打包，壁纸构建不启用 PWA。
-
-使用壁纸请通过上方创意工坊链接订阅，在 Wallpaper Engine 中应用并调整属性。需要自行构建时：
-
-```sh
-git clone https://github.com/LBEILC/RhineLabWallpaper.git
-cd RhineLabWallpaper
-npm ci
-npm run build:wallpaper
-```
-
-输出目录为 `release/wallpaper`，在 Wallpaper Engine 编辑器中打开其中的 `index.html`。系统媒体信息取决于播放器支持及 WE 媒体集成设置。更多细节见 [壁纸使用与开发说明](docs/WALLPAPER-ENGINE.md) 和 [创意工坊发布说明](docs/WORKSHOP-PUBLISH.md)。
-
-以下为项目共用的网页与三维档案功能介绍。
-
-
-## 新版效果
-
-- **亮暗配色**：设置中切换，卡片依次变色，详情与独立查看器同步适配。
-- **自适应阵列**：按实际镜头与屏幕范围布置、裁剪档案，改善宽屏边角露出尽头；开场铺满实际视口。
-- **超级性能模式**：设置中独立开启，降低三维渲染负担并保留动效，关闭恢复之前的画质。
-- **数字时钟**：页脚时、分、秒独立滚动，修复变换布局下部分数字动画中断。
-
-整合范围与验证见 [主分支整合记录](verification/WEB-INTEGRATION.md)。
-
-- **模型与正文同步解密**：对角解密线合拢、保持并收束，盖板自上而下由磨砂变清晰；右侧文档的遮挡条随之退开，露出标题、资料字段与正文。
-- **可看清的双环内构**：双环、连接带与白色／橙色部件封装在盖板与基板之间。顶边黄色方块、两处螺丝和盖板后的刻线补全了外壳细节。
-- **清晰／磨砂切换**：独立查看器可以随时改变玻璃状态，保留当前视角和拆解位置；支持平滑缩放、平移及复位。
-- **滚动文字与编号**：档案标题、分类、权限标签及编号连续滚动，快速输入衔接最新选择。
-- **重新校准的开场**：逐字输入、圆环绕行、连续 Logo 笔画、身份验证和欢迎转场，按原片逐帧修订轨迹与节奏。
-- **声音与画质设置**：玻璃交互音、系统电子音与三轨循环配乐；音效和音乐可独立开关、调节音量。画质提供四档预设及精细设置。
-
-## 界面与动效
-
-以下截图与动图于 **2026-09-09** 重新采集，均来自当前版本的实际浏览器运行。截图为 **1600 × 900**，GIF 为 **8–12 fps**、原速播放；压缩后的帧率与颜色不代表实时渲染质量。采集版本与复现步骤见 [素材说明](docs/media/README.md)。
-
-### 抽取、解密与阅读
-
-档案竖直升起，镜头靠近并转向详情构图。解密时玻璃与文档一起揭示；完成后可阅读概述、研究记录及访问日志，也可以收藏或导出 UTF-8 文本。
-
-![档案抽取与同步解密：对角线收束，玻璃从上向下变清晰，正文遮挡退开](docs/media/decryption.gif)
-
-| 解密完成 · 清晰内构与档案概述 | 研究记录 · 正文阅读 |
-| --- | --- |
-| [![解密后的档案：左侧可见双环内构，右侧显示机构资料](docs/media/detail.jpg)](docs/media/detail.jpg) | [![档案研究记录页签](docs/media/research.jpg)](docs/media/research.jpg) |
-
-### 清晰内构与磨砂玻璃
-
-在 360° 查看器中比较两种玻璃状态。切换不会重置镜头或拆解状态，返回详情后仍保留已解密状态。
-
-| 清晰 · 双环与连接带 | 磨砂 · 轻柔折射 |
-| --- | --- |
-| [![清晰玻璃下的档案内部结构](docs/media/viewer-clear.jpg)](docs/media/viewer-clear.jpg) | [![相同视角下的磨砂玻璃](docs/media/viewer-frosted.jpg)](docs/media/viewer-frosted.jpg) |
-
-<details>
-<summary><strong>查看动图：清晰／磨砂连续切换</strong></summary>
-
-![玻璃由清晰过渡到磨砂，再恢复清晰](docs/media/glass-motion.gif)
-
-</details>
-
-### 360° 旋转、拆解与重组
-
-紧固件、透明盖板、折射环组、光学核心、信息基板、背板与框架按六组展开。拆解后仍可旋转、平移和缩放，观察部件之间的关系，再一键重组。
-
-[![新版档案模型：六组结构分层展开](docs/media/assembly.jpg)](docs/media/assembly.jpg)
-
-<details>
-<summary><strong>查看动图：模型拆解、旋转与重组</strong></summary>
-
-![操作动图：档案盒从完整状态拆开，旋转观察后连续重组](docs/media/assembly-motion.gif)
-
-</details>
-
-### 循环阵列与滚动标题
-
-五类、每类八份，共 **40 份档案**。上下翻阅、左右切列均可持续循环；切回某列时保留上次选择。选中抬起与阵列波浪同时开始，标题和编号跟随输入滚动；返回阵列时，档案先转正再下降。
-
-<details>
-<summary><strong>查看动图：切列、翻阅与连续文字滚动</strong></summary>
-
-![循环切换档案，标题、编号、分类及刻度同步更新](docs/media/browse.gif)
-
-</details>
-
-### 白底开场
-
-从终端逐字输入到圆环、Logo 绘制，再进入身份接入与权限验证。可以重播，也可以跳过开场直接进入阵列。
-
-[![白底开场中的莱茵生命标志与身份接入文字](docs/media/boot.jpg)](docs/media/boot.jpg)
-
-<details>
-<summary><strong>查看动图：新版开场片段</strong></summary>
-
-![新版白底开场：逐字输入、圆环和连续标志绘制、身份验证与欢迎转场](docs/media/boot-motion.gif)
-
-</details>
-
-### 检索、声音与画质
-
-检索支持编号、标题、英文名、科室、相关人物与分类筛选。收藏和设置保存在当前浏览器中。音效区分档案的玻璃碰触与系统操作的电子反馈，背景配乐随开场、阵列、详情和查看器调整三轨比例。
-
-| 档案索引 · 关键词与分类筛选 | 系统设置 · 声音与画质 |
-| --- | --- |
-| [![输入莱茵关键词后的档案检索结果](docs/media/search.jpg)](docs/media/search.jpg) | [![独立音效和音乐音量、减少动态效果与画质预设](docs/media/settings.jpg)](docs/media/settings.jpg) |
-
-GIF 不含声音。可单独[试听原创配乐「观测室」](public/audio/observatory-preview.mp3)，完整声音效果请启动应用体验。浏览器可能需要一次点击或按键才允许播放音频。
-
-## 快速运行
-
-需要 **Node.js 22.12 或更高版本**（可使用 Node.js 24），以及支持 WebGL 2 的现代桌面浏览器。首次安装依赖需要网络；应用不需要 API Key，也不需要启动后端服务。
-
-### 获取项目
-
-```sh
-git clone https://github.com/LBEILC/RhineLabUI.git
-cd RhineLabUI
-```
-
-也可以从 GitHub 的 **Code → Download ZIP** 下载当前源码，或获取[夸克项目包](https://pan.quark.cn/s/762d9ee9dfc3)。夸克包是 **2026-09-08 的打包快照**，包含源码、运行模型与 Blender 源工程；后续更新以本仓库为准。
-
-### 安装并启动
-
-```sh
-npm ci
-npm run dev
-```
-
-打开终端显示的地址，通常为 `http://127.0.0.1:5173/`。如果端口被占用，以终端实际输出为准。
-
-Windows 用户安装 Node.js 并解压项目后，也可以双击 [`启动终端.cmd`](启动终端.cmd)：首次运行会安装依赖，然后启动本地服务并打开浏览器。
-
-### 构建与预览
-
-```sh
-npm run build
-npm run preview
-```
-
-生产文件输出到 `dist/`，可以交给静态 HTTP 服务托管。请通过服务地址访问，不要直接双击 `dist/index.html`。
-
-## 操作说明
-
-### 终端与档案
+## 操作快捷鍵與控制說明
 
 | 操作 | 效果 |
 | --- | --- |
-| 开场中按 `Enter` / `Esc`，或点击 `ENTER SYSTEM` | 资源就绪后进入交互阵列 |
-| `←` / `→` | 切换档案类别，首尾循环 |
-| `↑` / `↓` | 翻阅同类档案，首尾循环 |
-| `Enter`、`ACCESS FILE` 或文件编号 | 读取当前档案 |
-| 在详情模型上拖动 | 档案获得净空后，旋转观察 |
-| `/` 或 `ARCHIVE INDEX` | 打开检索，可搜索编号、标题、英文名、科室、负责人和分类 |
-| `SAVE ARCHIVE` / `SAVED` | 收藏当前档案 / 查看收藏 |
-| `EXPORT` | 下载当前档案的文本文件 |
-| `Esc` | 关闭当前弹窗，或从详情返回阵列 |
+| 在 3D 唱片上左右拖曳 | 水平旋轉檢視透明唱片模型 |
+| 滑鼠滾輪 | 縮放檢視距離 |
+| 左下角 `[ ▤ ]` 或 `LIBRARY OVERVIEW` | 切換「唱片特寫檢視」與「3D 陣列總覽 / 音樂庫」 |
+| 左下角 `[ ↻ ]` | 視角歸位並從 `0:00` 重新播放當前曲目 |
+| `收藏清單` / `全部歌曲` | 切換 3D 陣列牆顯示範圍 |
+| `/` 或右上角 `MUSIC INDEX` | 開啟曲目索引與跨來源搜尋 |
+| `＋ SAVED` / `＋ SAVE TRACK 收藏曲目` | 查看收藏清單 / 收藏或取消收藏目前曲目 |
+| 右上角 `設定` | 切換亮／暗色主題、目標解析度（1080p/2K/4K）、抗鋸齒（FXAA/SMAA/TAA）、音質、燈效與音效音量 |
+| `Esc` | 關閉目前彈窗，或返回上一層檢視 |
 
-### 独立模型查看器
+---
 
-在详情页点击 **「360° 查看文档模型」** 进入。
+## 專案目錄結構
 
-| 操作 | 效果 |
+| 目錄或檔案 | 說明 |
 | --- | --- |
-| 鼠标拖动 | 环绕旋转模型 |
-| 滚轮、`+` / `−` | 平滑缩放 |
-| 方向键 | 平移观察位置 |
-| 「复位视角」或 `Home` | 平滑恢复初始观察位置 |
-| 「清晰」 / 「磨砂」 | 切换玻璃状态，保留视角和拆解位置 |
-| 「拆解档案」 / 「一键重组」 | 展开六组部件 / 连续收回 |
-| `Esc` 或「返回档案」 | 关闭查看器，返回原档案 |
+| [`src/music/app.ts`](src/music/app.ts) | 音樂終端主控制器、設定面板、高 DPI 即時頻譜、音效回饋與桌面視窗整合 |
+| [`src/music/interface.ts`](src/music/interface.ts)、[`src/music/music.css`](src/music/music.css) | 無邊框桌面版介面結構與樣式表 |
+| [`src/music/player.ts`](src/music/player.ts)、[`src/music/adapters.ts`](src/music/adapters.ts) | 播放佇列狀態機、共用單例 `AudioContext` 與本機／YouTube／Bilibili／Spotify／串流代理播放介面卡 |
+| [`src/music/library.ts`](src/music/library.ts) | IndexedDB 音樂庫、收藏清單、播放清單、LRC 歌詞與偏好設定儲存 |
+| [`src/music/wall.ts`](src/music/wall.ts) | 3D 唱片牆控制器、曲目封面非同步載入、畫質／解析度／抗鋸齒與音樂律動同步 |
+| [`src/scene.ts`](src/scene.ts) | Three.js 三維場景、透明玻璃材質、FXAA / SMAA / TAA 後製管線與零分配動態追蹤 |
+| [`src/render-quality.ts`](src/render-quality.ts)、[`src/quality-renderer.ts`](src/quality-renderer.ts) | 畫質預設、1080p / 2K / 4K 目標解析度計算與紋理過濾管線 |
+| [`src/audio.ts`](src/audio.ts) | Web Audio 玻璃互動音效、終端電子回饋音效與原創三軌背景配樂合成 |
+| [`scripts/launcher.cs`](scripts/launcher.cs) | Windows 64 位元無邊框 WebView2 原生宿主、本機 HTTP 伺服器與 1 MB 記憶體預熱串流代理 |
+| [`scripts/installer.cs`](scripts/installer.cs)、[`scripts/build-installer.mjs`](scripts/build-installer.mjs) | Windows 64 位元安裝精靈（含捷徑建立、WebView2 檢查與解除安裝器）及分享包建置腳本 |
+| [`scripts/build-exe.mjs`](scripts/build-exe.mjs) | 單檔獨立桌面執行檔與多尺寸 32 位元 BGRA DIB `.ico` 圖示打包腳本 |
+| [`docs/`](docs/) | [改造紀錄](docs/MUSIC-CHANGES.md)、[平臺設定說明](docs/MUSIC-PLATFORMS.md)、[驗收報告](docs/MUSIC-VERIFICATION.md) |
 
-### 显示与偏好
+---
 
-布局以 **1920 × 1080** 为基准等比例适应窗口，主要面向桌面与横向屏幕。设置页提供音效与背景音乐的独立开关、独立音量，以及完整、减少或自定义动画、画质、全屏和重新播放开场。动画选择由本站设置控制，收藏和偏好保存在当前浏览器中。
+## 授權與上游來源說明
 
-首次载入需要加载字体与 GLB 模型。项目保留了四份官方 MiSans WOFF2，合计约 19.7 MB，按实际使用加载。画质预设为**性能、原始、高、极高**，默认使用原始；精细设置可调整渲染比例、像素密度、抗锯齿、纹理过滤、透明材质分辨率、阴影、环境遮蔽及景深。运行不够流畅时可选性能档；需要简化镜头、文字与揭示动画时，可启用减少动态效果。
+本專案程式碼、建模腳本、技術文件、Blender 源工程、GLB 模型與原創配樂／音效採用 **[MIT License](LICENSE)** 開源授權，上游基底與三維視覺資產來自 **[LBEILC / RhineLabUI](https://github.com/LBEILC/RhineLabUI)**（Copyright (c) 2026 LBEILC）。
 
-## 工程结构
-
-| 目录或文件 | 内容 |
-| --- | --- |
-| [`src/main.ts`](src/main.ts) | 页面状态、档案阅读、检索、收藏与快捷键 |
-| [`src/boot.ts`](src/boot.ts)、[`src/boot-motion.ts`](src/boot-motion.ts) | 开场界面与逐帧时间轴 |
-| [`src/scene.ts`](src/scene.ts)、[`src/archive-loop.ts`](src/archive-loop.ts) | Three.js 场景、循环阵列、抽取与归位 |
-| [`src/model-viewer.ts`](src/model-viewer.ts) | 独立模型查看器与拆解动画 |
-| [`src/decryption.ts`](src/decryption.ts)、[`src/document-decryption.ts`](src/document-decryption.ts) | 模型解密轨迹与正文同步揭示 |
-| [`src/audio.ts`](src/audio.ts)、[`public/audio/`](public/audio/) | 交互音效、三轨配乐与音源记录 |
-| [`src/render-quality.ts`](src/render-quality.ts)、[`src/quality-renderer.ts`](src/quality-renderer.ts) | 画质预设与渲染管线 |
-| [`content/archives.json`](content/archives.json) | 页面与下载共用的五类、40 份档案数据 |
-| [`src/data.ts`](src/data.ts) | 档案类型与阵列位置映射 |
-| [`public/assets/`](public/assets/) | 运行所需的 GLB 模型 |
-| [`public/archives/`](public/archives/) | 导出的档案文本；启动和构建前自动生成 |
-| [`art/`](art/) | Blender 源文件、建模与审阅脚本 |
-| [`scripts/`](scripts/) | 档案导出与行为检查 |
-| [`reference/`](reference/)、[`verification/`](verification/) | 开发对照工具与分阶段验证记录 |
-| [`docs/media/`](docs/media/) | README 截图与动图 |
-| [`DESIGN.md`](DESIGN.md) | 视觉、相机、材质与运动约束 |
-
-原片时间轴使用 160 个阵列位置；交互模式使用固定的可见窗口与外围卡片补位，让有限的档案内容可以持续循环。
-
-### 修改与复核
-
-修改档案内容从 [`content/archives.json`](content/archives.json) 入手，字段与操作步骤见 [档案修改说明](content/README.md)。`npm run dev` 与 `npm run build` 会先校验数据，再更新 `public/archives/` 中的文本导出；开发过程中修改数据后，可执行 `npm run export:archives` 同步下载文件。`npm run check:content` 检查数据规则与导出一致性。
-
-```sh
-node scripts/check-motion.mjs
-node scripts/check-loop.mjs
-node scripts/check-appearance.mjs
-node scripts/check-assembly.mjs
-node scripts/check-decryption.mjs
-node scripts/check-shell.mjs
-node scripts/check-internal-optics.mjs
-node scripts/check-quality.mjs
-```
-
-这些脚本检查运动、循环位置、外观、装配结构、解密轨迹、外壳、内构与画质参数。视觉效果仍需在浏览器中实际查看，尤其是快速切换、模型归位、文档揭示及查看器进出过渡。
-
-| 本地调试路径 | 用途 |
-| --- | --- |
-| `/?scene=archive` | 直接进入档案阵列 |
-| `/?scene=detail` | 直接进入档案详情 |
-| `/?time=28&freeze=1` | 固定在参考时间轴的指定时刻 |
-| `/reference/review.html`、`/reference/boot-review.html` | 原片与复刻对照工具 |
-| `/reference/decryption-review.html` | 玻璃解密逐帧对照 |
-| `/reference/document-decryption-check.html` | 正文同步解密与布局检查 |
-| `/reference/boot-audio.html` | 完整开场声音试听 |
-
-原 PV 不随仓库分发。使用视频对照工具时，需要自行准备对应参考视频；正常运行应用不依赖它。
-
-### Blender 源工程
-
-| 文件 | 用途 |
-| --- | --- |
-| [`art/rhine-archive.blend`](art/rhine-archive.blend) | 档案盒基础模型与审阅灯光 |
-| [`art/archive-assembly.blend`](art/archive-assembly.blend) | 可按六组结构拆解的模型 |
-| [`art/build_archive.py`](art/build_archive.py) | 生成基础模型与 GLB |
-| [`art/build_assembly.py`](art/build_assembly.py) | 生成拆解模型与 GLB |
-| [`art/internal_architecture.py`](art/internal_architecture.py) | 当前双环内构与连接带 |
-| [`art/shell_reference_details.py`](art/shell_reference_details.py) | 顶边方块、螺丝及盖板后刻线 |
-| [`art/setup_studio.py`](art/setup_studio.py) | 配置资产审阅灯光与相机 |
-
-普通运行直接使用现有 GLB 即可，无需安装 Blender。重新建模时，可在 Blender 的脚本环境中通过 `runpy.run_path()` 执行对应脚本，或通过 Blender MCP 调用。脚本根据自身位置确定项目目录，重新生成会更新对应模型输出。
-
-## 参考与资源说明
-
-参考作品为《明日方舟》特别映像「莱茵生命：访问」：[BV1rr4y1b7sz](https://www.bilibili.com/video/BV1rr4y1b7sz/)。本项目与官方制作方无隶属关系，原 PV、相关名称、标志与设定的权利归各自权利人所有。原片未展示的档案摘要、日期、研究记录等属于本项目的扩展演示内容。
-
-模型为重新制作；实时折射、景深、灯光与局部细节和原 PV 仍有差异。身份验证画面是演示状态机，不连接真实身份或业务服务。
-
-- **MiSans**：使用小米官方字体文件，保留[字体许可](public/fonts/MiSans-license.pdf)及字体目录内的版权说明，设置页也提供署名与许可入口。
-- **Rolling Number**：用于编号和文字滚动，许可见 [`public/licenses/rolling-number.txt`](public/licenses/rolling-number.txt)。
-- **声音**：三轨配乐为本项目程序编配；逐字输入使用原 PV 的三个 38ms 短音，来源与处理记录见 [音频说明](public/audio/README.md)。原片短音及其衍生片段不纳入原创配乐的 MIT 授权声明。
-- **其他依赖**：各自遵循其原有许可。源码公开不改变第三方资源的权利。
-
-源码包包含运行代码、模型、Blender 工程、说明与验证脚本，不包含依赖目录、本机缓存、原 PV 或完整录制素材。
-
-## 开源许可
-
-本项目由作者创作且有权授权的全部内容统一采用 [MIT License](LICENSE)，版权署名为 **Copyright (c) 2026 LBEILC**。授权范围包括程序代码、建模脚本、技术文档、Blender 源工程、GLB 模型、原创配乐与音效，以及图像、动图和其他原创资源；非代码资产同样适用此许可。
-
-你可以使用、复制、修改、制作衍生版本和再分发上述内容，包括随 GitHub 仓库、Release 或应用安装包发布，以及用于截图、GIF 和演示视频。商业、非商业、开源或闭源项目均可使用，也可以用于申请开源项目支持、奖励或会员权益，无需另行申请本项目作者的许可。分发上述内容或其重要部分时，须保留版权声明和 MIT 许可证。所有获授权内容均按原样提供，不作担保，具体以许可证全文为准。
-
-以下第三方内容及权利不在本项目的 MIT 授权范围内：
-
-- **《明日方舟》相关内容**：包括《明日方舟》及莱茵生命相关名称、标志、设定、原 PV、原作视觉设计、原片音频采样及其衍生片段，以及这些内容在模型、界面、截图或演示文本中的呈现。相关权利归各自权利人所有，本项目无法代替他们授权。
-- **其他第三方资源**：MiSans、Novecento、Rolling Number 及其他第三方字体、依赖或素材继续遵循各自的许可证和版权声明，不因本项目的许可范围扩大而改变；独立许可资源也不会因此成为可自由分发的资源。
-
-上述模型授权明确包含 `public/assets/archive-cassette.glb`、`public/assets/archive-assembly.glb`、对应 Blender 源工程及作者有权授权的衍生内容。模型中涉及《明日方舟》或其他第三方的元素仍适用上述排除条款；作者对自行制作部分的授权不代表原作相关权利也已获授权。
-
-欢迎在项目 README、关于页面或展示材料中注明 **LBEILC / RhineLabUI** 并链接[本项目](https://github.com/LBEILC/RhineLabUI)，这不是 MIT 许可证之外的额外强制条件，也不替代分发时保留版权声明和许可证的要求。
-
-复用时，请根据用途处理涉及的第三方素材与标志。GitHub 当前源码包已包含本许可证；上方夸克链接为早期打包快照，最新许可说明以本仓库为准。
+以下第三方內容與權利不在 MIT 授權範圍內：
+- **《明日方舟》相關設定與視覺元素**：包含《明日方舟》及萊茵生命相關名稱、標誌與設定，相關權利歸各自權利人所有，本專案為非官方技術展示與播放器改造，與官方無隸屬關係。
+- **第三方字體與開源元件**：
+  - **MiSans**：使用小米官方字體檔案，保留 [字體授權說明](public/fonts/MiSans-license.pdf) 與 [`public/fonts/NOTICE.txt`](public/fonts/NOTICE.txt)。
+  - **Rolling Number**：用於編號與標題文字滾動動畫，授權見 [`public/licenses/rolling-number.txt`](public/licenses/rolling-number.txt)。
+  - 其他第三方套件與二進位工具（Three.js、`music-metadata`、WebView2 SDK、`yt-dlp`）各自遵循其原始開源或官方散布條款。
+放
