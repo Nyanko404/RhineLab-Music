@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="theme-color" content="#e9e5de" />
+    <script>
+      try {
+        var raw = localStorage.getItem("rhine-music-library");
+        var theme = raw ? (JSON.parse(raw).prefs || {}).theme : "light";
+        var isDark = theme === "dark" || (theme === "system" && matchMedia("(prefers-color-scheme: dark)").matches);
+        var bg = isDark ? "#151818" : "#e9e5de";
+        document.querySelector('meta[name="theme-color"]').setAttribute("content", bg);
+        document.documentElement.style.backgroundColor = bg;
+      } catch (e) {}
+    </script>
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="RhineLab Music" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <meta
+      name="description"
+      content="RhineLab Music · 多來源音樂庫與三維專輯陣列。"
+    />
+    <title>RhineLab Music</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <div id="viewport"><div id="stage"></div></div>
+    <script type="module" src="/src/entry.ts"></script>
+  </body>
+</html>
