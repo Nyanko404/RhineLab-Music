@@ -6,9 +6,7 @@
 [![下載 v1.0.0 免安裝攜帶版](https://img.shields.io/badge/下載_v1.0.0-免安裝攜帶版_ZIP-2a3030?style=for-the-badge)](https://github.com/ychengyu/RhineLab-Music/releases/download/v1.0.0/RhineLab-Music-Portable-v1.0.0-Win64.zip)
 [![GitHub Release](https://img.shields.io/badge/Releases-v1.0.0-4b5350?style=for-the-badge)](https://github.com/ychengyu/RhineLab-Music/releases/tag/v1.0.0)
 
-![萊茵生命終端：由透明檔案盒構成的三維陣列](docs/media/archive.jpg)
-
-RhineLab Music 改造自 [LBEILC/RhineLabUI](https://github.com/LBEILC/RhineLabUI)，沿用原始 **TypeScript + Three.js + Vite** 即時三維渲染架構、GLB 卡盒模型與玻璃光學材質，並專為 **Windows 電腦桌面端** 打造無邊框 WebView2 原生宿主、本機與跨平臺串流音訊代理、高解析度超採樣渲染與多種抗鋸齒管線。
+RhineLab Music 為專注於 **Windows 電腦桌面端** 的 3D 互動音樂播放器，採用 **TypeScript + Three.js + Vite** 即時三維渲染架構與無邊框 WebView2 原生宿主，具備透明玻璃唱片匣檢視、音樂頻譜律動、本機無損與跨平臺串流音訊代理、1080p / 2K / 4K 超採樣渲染以及 FXAA / SMAA / TAA 抗鋸齒管線。
 
 ---
 
