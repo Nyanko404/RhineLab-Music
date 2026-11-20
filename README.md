@@ -15,7 +15,6 @@ RhineLab Music 為專注於 **Windows 電腦桌面端** 的 3D 互動音樂播�
 
 | 版本 | 檔案 | 說明 |
 | --- | --- | --- |
-| **一鍵安裝精靈（推薦）** | [`RhineLab-Music-Setup-v1.0.0.exe`](https://github.com/ychengyu/RhineLab-Music/releases/download/v1.0.0/RhineLab-Music-Setup-v1.0.0.exe) | 免系統管理員權限安裝（預設 `%LOCALAPPDATA%\Programs\RhineLab Music`，可自訂資料夾），自動建立桌面與開始功能表捷徑、偵測 WebView2 Runtime 並登錄 Windows 解除安裝程式 |
 | **免安裝攜帶版 ZIP** | [`RhineLab-Music-Portable-v1.0.0-Win64.zip`](https://github.com/ychengyu/RhineLab-Music/releases/download/v1.0.0/RhineLab-Music-Portable-v1.0.0-Win64.zip) | 解壓縮至任意資料夾後，直接雙擊執行 `RhineLab-Music.exe` 即可使用 |
 | **SHA-256 校驗清單** | [`SHA256SUMS.txt`](https://github.com/ychengyu/RhineLab-Music/releases/download/v1.0.0/SHA256SUMS.txt) | 安裝檔與攜帶版壓縮包之 SHA-256 雜湊校驗碼 |
 
