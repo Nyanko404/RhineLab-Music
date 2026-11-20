@@ -2,7 +2,6 @@
 
 **把萊茵生命的終端，做成可實際操作的 Windows 64 位元三維桌面音樂播放器。**
 
-[![下載 v1.0.0 安裝精靈](https://img.shields.io/badge/下載_v1.0.0-Windows_64位元_一鍵安裝版-d98a4e?style=for-the-badge)](https://github.com/ychengyu/RhineLab-Music/releases/download/v1.0.0/RhineLab-Music-Setup-v1.0.0.exe)
 [![下載 v1.0.0 免安裝攜帶版](https://img.shields.io/badge/下載_v1.0.0-免安裝攜帶版_ZIP-2a3030?style=for-the-badge)](https://github.com/ychengyu/RhineLab-Music/releases/download/v1.0.0/RhineLab-Music-Portable-v1.0.0-Win64.zip)
 [![GitHub Release](https://img.shields.io/badge/Releases-v1.0.0-4b5350?style=for-the-badge)](https://github.com/ychengyu/RhineLab-Music/releases/tag/v1.0.0)
 
